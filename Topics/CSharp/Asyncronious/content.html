@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <link href="../../../css/styles.css" rel="stylesheet">
+        <title>Асинхронное программирование. C#</title>
+    </head>
+    <body>
+		<div class="header">
+			<div class="image">
+				<img class="image" src="../../icon.png"></image>
+			</div>
+			<div class="title">
+				<a>IMPROVE YOURSELF</a>
+			</div>
+		</div>
+		<div class="topics">
+			<ul class="nav">
+				<li>
+					<a href="../../../main.html"><b>C# / C++</b></a>
+					<a href="../ClassesAndObjects/content.html">Классы</a>
+					<a href="../Multithreading/content.html">Многопоточность</a>
+					<a href="../Delegates/content.html">Делегаты</a>
+				</li>
+			</ul>
+		</div>
+        <div class="content">
+			<div class="content_wrapper">
+				<div class="topic_title_info">
+					<ul class="topic_title_info_list">
+						<li>
+							<a>от: Max</a>
+							<a>"29 августа 2020 года"</a>
+						</li>
+					</ul>
+					<h2 class="topic_title_header">Асинхронное программирование</h2>
+					<img class="topic_title_info_image" src="title.jpg"></img>
+				</div>
+				<div class="article">
+					<p>Асинхронность позволяет вынести отдельные задачи из основного потока в специальные асинхронные методы или блоки кода. 
+					Особенно это актуально в графических программах, где продолжительные задачи могу блокировать интерфейс пользователя. 
+					И чтобы этого не произошло, нужно задействовать асинхронность. Также асинхронность несет выгоды в веб-приложениях при обработке запросов от пользователей, при обращении к базам данных или сетевым ресурсам. При больших запросах к базе данных асинхронный метод просто уснет на время, пока не получит данные от БД, а основной поток сможет продолжить свою работу. 
+					В синхронном же приложении, если бы код получения данных находился в основном потоке, этот поток просто бы блокировался на время получения данных.
+					Ключевыми для работы с асинхронными вызовами в C# являются два ключевых слова: async и await, цель которых - упростить написание асинхронного кода. 
+					Они используются вместе для создания асинхронного метода.
+					<p><span class="b">Асинхонный метод</span> обладает следующими признаками:</p>
+					<div class="list_style">
+						<ul>
+							<li><p>В заголовке метода используется модификатор <span class="b">async</span></p></li>
+							<li><p>Метод содержит одно или несколько выражений <span class="b">await</span></p></li>
+							<li>
+								<p>В качестве возвращаемого типа используется один из следующих:
+									<ul style="margin-left:25px;">
+										<li>void</li>
+										<li>Task</li>
+										<li>Task&ltT&gt</li>
+										<li>ValueTask&ltT&gt</li>
+									</ul>
+								</p>
+							</li>
+						</ul>
+					</div>
+					<p>Асинхронный метод, как и обычный, может использовать любое количество параметров или не использовать их вообще. 
+					Однако асинхронный метод не может определять параметры с модификаторами <span class="b">out</span> и <span class="b">ref</span>. 
+					Также стоит отметить, что слово <span class="b">async</span>, которое указывается в определении метода, не делает автоматически метод асинхронным. 
+					Оно лишь указывает, что данный метод может содержать одно или несколько выражений <span class="b">await</span>.
+					</p>
+					<p>Рассмотрим пример асинхронного метода:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_1" class="hide"/>
+						<label div id="button" for="show_code_1">Показать код</label>
+						<div>
+							<pre>
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+ 
+namespace HelloApp
+{
+    class Program
+    {
+        static void Factorial()
+        {
+            int result = 1;
+            for(int i = 1; i <= 6; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(8000);
+            Console.WriteLine($"Факториал равен {result}");
+        }
+        // определение асинхронного метода
+        static async void FactorialAsync()
+        {
+            Console.WriteLine("Начало метода FactorialAsync"); // выполняется синхронно
+            await Task.Run(()=>Factorial());                // выполняется асинхронно
+            Console.WriteLine("Конец метода FactorialAsync");
+        }
+ 
+        static void Main(string[] args)
+        {
+            FactorialAsync();   // вызов асинхронного метода
+ 
+            Console.WriteLine("Введите число: ");
+            int n = Int32.Parse(Console.ReadLine());
+            Console.WriteLine($"Квадрат числа равен {n * n}");
+             
+            Console.Read();
+        }
+    }
+}
+</pre>   
+						</div>
+					</div>
+					<p>Здесь прежде всего определен обычный метод подсчета факториала. Для имитации долгой работы в нем используется задержка на 8 секунд с помощью метода Thread.Sleep(). 
+					Условно это некоторый метод, который выполняет некоторую работу продолжительное время. Но для упрощения понимания он просто подсчитывает факториал числа 6.
+					Также здесь определен асинхронный метод <span class="b">FactorialAsync()</span>. 
+					Асинхронным он является потому, что имеет в определении перед возвращаемым типом модификатор <span class="b">async</span>, его возвращаемым типом является <span class="b">void</span>, и в теле метода определено выражение <span class="b">await</span>.
+					Выражение <span class="b">await</span> определяет задачу, которая будет выполняться асинхронно. В данном случае подобная задача представляет выполнение функции факториала:
+					</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_2" class="hide"/>
+						<label div id="button" for="show_code_2">Показать код</label>
+						<div>
+							<pre>await Task.Run(()=>Factorial());</pre>   
+						</div>
+					</div>
+					<p>По негласным правилам в названии асинхроннных методов принято использовать суффикс Async - FactorialAsync(), хотя в принципе это необязательно делать.
+					Сам факториал мы получаем в асинхронном методе <span class="b">FactorialAsync</span>. Асинхронным он является потому, что он объявлен с модификатором async и содержит использование ключевого слова await.
+					</p>
+					<p>И в методе Main мы вызываем этот асинхронный метод.</p>
+					<p>Посмотрим, какой у программы будет консольный вывод:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_3" class="hide"/>
+						<label div id="button" for="show_code_3">Показать код</label>
+						<div>
+							<pre>Начало метода FactorialAsync
+Введите число: 
+7
+Квадрат числа равен 49
+Конец метода Main
+Факториал равен 720
+Окончание метода FactorialAsync</pre>   
+						</div>
+					</div>
+					<p>Разберем поэтапно, что здесь происходит:</p>
+					<p>Запускается метод Main, в котором вызывается асинхронный метод <span class="b">FactorialAsync</span>.</p> 
+					<p>Метод <span class="b">FactorialAsync</span> начинает выполняться синхронно вплоть до выражения await.</p>
+					<p>Выражение await запускает асинхронную задачу <span class="b">Task.Run(()=>Factorial())</span></p>
+					<p>Пока выполняется асинхронная задача <span class="b">Task.Run(()=>Factorial())</span> (а она может выполняться довольно родожительное время), выполнение кода возвращается в вызывающий метод - то есть в метод Main. 
+					В методе Main нам будет предложено ввести число для вычисления квадрата числа.
+					В этом и преимущество асинхронных методов - асинхронная задача, которая может выполняться довольно долгое время, не блокирует метод Main, и мы можем продолжать работу с ним, например, вводить и обрабатывать данные.</p>
+					<p>Когда асинхронная задача завершила свое выполнение (в случае выше - подсчитала факториал числа), продолжает работу асинхронный метод FactorialAsync, который вызвал асинхронную задачу.</p>
+					<p>Функция факториала, возможно, представляет не самый показательный пример, так как в реальности в данном случае нет смысла делать ее асинхронной. Но рассмотрим другой пример - чтение-запись файла:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_4" class="hide"/>
+						<label div id="button" for="show_code_4">Показать код</label>
+						<div>
+							<pre>using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.IO;
+ 
+namespace HelloApp
+{
+    class Program
+    {
+        static async void ReadWriteAsync()
+        {
+            string s = "Hello world! One step at a time";
+ 
+            // hello.txt - файл, который будет записываться и считываться
+            using (StreamWriter writer = new StreamWriter("hello.txt", false))
+            {
+                await writer.WriteLineAsync(s);  // асинхронная запись в файл
+            }
+            using (StreamReader reader = new StreamReader("hello.txt"))
+            {
+                string result = await reader.ReadToEndAsync();  // асинхронное чтение из файла
+                Console.WriteLine(result);
+            }
+        } 
+        static void Main(string[] args)
+        {
+            ReadWriteAsync();
+             
+            Console.WriteLine("Некоторая работа");
+            Console.Read();
+        }
+    }
+}</pre>   
+						</div>
+					</div>
+					<p>Асинхронный метод ReadWriteAsync() выполняет запись в файл некоторой строки и затем считывает записанный файл. 
+					Подобные операции могут занимать продолжительное время, особенно при больших объемах данных, поэтому такие операции лучше делать асинхронными.
+					</p>
+					<p>Фреймворк .NET уже имеет встроенную поддержку таких операций. Например, в классе StreamWriter определен метод <span class="b">WriteLineAsync()</span>. 
+					По сути он уже представляет асинхронную операцию и принимает в качестве параметра некоторую строку, которую надо записать в файл. 
+					Поскольку этот метод представляет асинхронную операцию, то вызов этого метода мы можем оформить в выражение <span class="b">await</span>:
+					</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_5" class="hide"/>
+						<label div id="button" for="show_code_5">Показать код</label>
+						<div>
+							<pre>await writer.WriteLineAsync(s);  // асинхронная запись в файл</pre>   
+						</div>
+					</div>
+					<p>Аналогично в классе StreamReader определен метод <span class="b">ReadToEndAsync()</span>, который также представляет асинхронную операцию и который возвращает весь считанный текст.
+					Во фреймворке .NET Core определено много подобных методов. Как правило, они связаны с работой с файлами, отправкой сетевых запросов или запросов к базе данных. 
+					Их легко узнать по суффиксу Async. То есть если метод имеет подобный суффикс в названии, то с большей степенью вероятности его можно использовать в выражении <span class="b">await</span>.
+					</p>
+					<p>Далее в методе Main вызывается асинхронный метод <span class="b">ReadWriteAsync</span>:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_6" class="hide"/>
+						<label div id="button" for="show_code_6">Показать код</label>
+						<div>
+							<pre>
+static void Main(string[] args)
+{
+    ReadWriteAsync();
+             
+    Console.WriteLine("Некоторая работа");
+    Console.Read();
+}</pre>   
+						</div>
+					</div>
+					<p>И опять же, когда выполнение в методе <span class="b">ReadWriteAsync</span> доходит до первого выражения <span class="b">await</span>, управление возвращается в метод Main, и мы можем продолжать с ним работу. 
+					Запись в файл и считывание файла будут производиться параллельно и не будут блокировать работу метода Main.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+    </body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Programming</title>
+		<style>
+			body{
+				font-family: Helvetica, sans-serif;
+				box-sizing: border-box;
+			}
+			ul.main{
+				margin-top:100px;
+                margin-left: 50px;
+				margin-right: 50px;
+                padding-left: 0px;
+                list-style: none;
+            }
+			.main li { 
+                display: inline; 
+            }
+			ul.main a {
+				margin-top:10px;
+				padding-top: 50px;
+                display: inline-block;
+                width: 100%;
+				height: 100px;
+                background-color: #f4f4f4;
+                text-decoration: none;
+                color: #333;
+                text-align: center;
+            }
+            ul.main a:hover{
+                background-color: #333;
+                color: #f4f4f4;
+				transform: scale(1.1);
+            }
+			.header{
+				position: fixed;
+				top: 0;
+				left: 0;
+				z-index:2;
+				right:0;
+				background-color: #333;
+				text-align:center;
+				color: #ffffff;
+			}
+			#about{ 
+				margin:0px;
+				font-size: 12px;
+				text-align: center;
+				padding: 10px 10px 30px 10px;
+				background-color: #f4f4f4;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header" >
+			<div class="header">
+				<h1>Выберите тему</h1>
+			</div>
+		<div id="main">
+        <ul class="main">
+            <li><a href="ClassesAndObjects/content.html"><p  <p style="font-family:Verdana; font-size:35 px">Классы и объекты</p></a></li>
+			<li><a href="Asyncronious/content.html"><p  <p style="font-family:Verdana; font-size:35 px">Асинхронное программирование</p></a></li>
+			<li><a href="Delegates/content.html"><p  <p style="font-family:Verdana; font-size:35 px">Делегаты</p></a></li>
+			<li><a href="Multithreading/content.html"><p  <p style="font-family:Verdana; font-size:35 px">Многопоточность</p></a></li>
+        </ul>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+	</body>
+</html>

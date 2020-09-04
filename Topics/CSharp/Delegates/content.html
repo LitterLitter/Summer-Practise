@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <link href="../../../css/styles.css" rel="stylesheet">
+        <title>Делегаты. C#</title>
+    </head>
+    <body>
+		<div class="header">
+			<div class="image">
+				<img class="image" src="../../icon.png"></image>
+			</div>
+			<div class="title">
+				<a>IMPROVE YOURSELF</a>
+			</div>
+		</div>
+		<div class="topics">
+			<ul class="nav">
+				<li>
+					<a href="../../../main.html"><b>C# / C++</b></a>
+					<a href="../ClassesAndObjects/content.html">Классы</a>
+					<a href="../Multithreading/content.html">Многопоточность</a>
+					<a href="../Asyncronious/content.html">Асинхронное программирование</a>
+				</li>
+			</ul>
+		</div>
+        <div class="content">
+			<div class="content_wrapper">
+				<div class="topic_title_info">
+					<ul class="topic_title_info_list">
+						<li>
+							<a>от: Max</a>
+							<a>"29 августа 2020 года"</a>
+						</li>
+					</ul>
+					<h2 class="topic_title_header">Делегаты</h2>
+					<img class="topic_title_info_image" src="title.jpg"></img>
+				</div>
+				<div class="article">
+					<p>Делегаты представляют такие объекты, которые указывают на методы. 
+					То есть делегаты - это указатели на методы и с помощью делегатов мы можем вызвать данные методы.
+					</p>
+					<h2>Определение делегатов</h2>
+					<p>Для объявления делегата используется ключевое слово <span class="b">delegate</span>, после которого идет возвращаемый тип, название и параметры. Например:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_1" class="hide"/>
+						<label div id="button" for="show_code_1">Показать код</label>
+						<div>
+							<pre>delegate void Message();</pre>
+						</div>
+					</div>
+					<p>Делегат Message в качестве возвращаемого типа имеет тип void (то есть ничего не возвращает) и не принимает никаких параметров. 
+						Это значит, что этот делегат может указывать на любой метод, который не принимает никаких параметров и ничего не возвращает.
+					</p>
+					<p>Рассмотрим примение этого делегата:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_2" class="hide"/>
+						<label div id="button" for="show_code_2">Показать код</label>
+						<div>
+							<pre>class Program
+{
+    delegate void Message(); // 1. Объявляем делегат
+ 
+    static void Main(string[] args)
+    {
+        Message mes; // 2. Создаем переменную делегата
+        if (DateTime.Now.Hour < 12)
+        {
+            mes = GoodMorning; // 3. Присваиваем этой переменной адрес метода
+        }
+        else
+        {
+            mes = GoodEvening;
+        }
+        mes(); // 4. Вызываем метод
+        Console.ReadKey();
+    }
+    private static void GoodMorning()
+    {
+        Console.WriteLine("Good Morning");
+    }
+    private static void GoodEvening()
+    {
+        Console.WriteLine("Good Evening");
+    }
+}							</pre>
+						</div>
+					</div>
+					<p>Здесь сначала мы определяем делегат:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_3" class="hide"/>
+						<label div id="button" for="show_code_3">Показать код</label>
+						<div>
+							<pre>delegate void Message(); // 1. Объявляем делегат</pre>
+						</div>
+					</div>
+					<p>В данном случае делегат определяется внутри класса, но также можно определить делегат вне класса внутри пространства имен.</p>
+					<p>Для использования делегата объявляется переменная этого делегата:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_4" class="hide"/>
+						<label div id="button" for="show_code_4">Показать код</label>
+						<div>
+							<pre>Message mes; // 2. Создаем переменную делегата</pre>
+						</div>
+					</div>
+					<p>С помощью свойства DateTime.Now.Hour получаем текущий час. 
+					И в зависимости от времени в делегат передается адрес определенного метода. 
+					Обратите внимание, что методы эти имеют то же возвращаемое значение и тот же набор параметров (в данном случае отсутствие параметров), что и делегат.
+					</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_5" class="hide"/>
+						<label div id="button" for="show_code_5">Показать код</label>
+						<div>
+							<pre>	
+mes = GoodMorning; // 3. Присваиваем этой переменной адрес метода
+mes(); // 4. Вызываем метод
+							</pre>
+						</div>
+					</div>
+					<p>Вызов делегата производится подобно вызову метода. Посмотрим на примере другого делегата:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_6" class="hide"/>
+						<label div id="button" for="show_code_6">Показать код</label>
+						<div>
+							<pre>	
+class Program
+{
+    delegate int Operation(int x, int y);
+     
+    static void Main(string[] args)
+    {
+        // присваивание адреса метода через контруктор
+        Operation del = Add; // делегат указывает на метод Add
+        int result = del(4,5); // фактически Add(4, 5)
+        Console.WriteLine(result);
+ 
+        del = Multiply; // теперь делегат указывает на метод Multiply
+        result = del(4, 5); // фактически Multiply(4, 5)
+        Console.WriteLine(result);
+ 
+        Console.Read();
+    }
+    private static int Add(int x, int y)
+    {
+        return x+y;
+    }
+    private static int Multiply (int x, int y)
+    {
+        return x * y;
+    }
+}
+							</pre>
+						</div>
+					</div>
+					<p>В данном случае делегат Operation возвращает значение типа int и имеет два параметра типа int. 
+					Поэтому этому делегату соответствует любой метод, который возвращает значение типа int и принимает два параметра типа int. 
+					В данном случае это методы Add и Multiply. То есть мы можем присвоить переменной делегата любой из этих методов и вызывать.
+					Поскольку делегат принимает два параметра типа int, то при его вызове необходимо передать значения для этих параметров: del(4,5).
+					Делегаты необязательно могут указывать только на методы, которые определены в том же классе, где определена переменная делегата. 
+					Это могут быть также методы из других классов и структур.
+					</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_7" class="hide"/>
+						<label div id="button" for="show_code_7">Показать код</label>
+						<div>
+							<pre>
+class Math
+{
+    public int Sum(int x, int y) { return x + y; }
+}
+class Program
+{
+    delegate int Operation(int x, int y);
+ 
+    static void Main(string[] args)
+    {
+        Math math = new Math();
+        Operation del = math.Sum;
+        int result = del(4, 5);     // math.Sum(4, 5)
+        Console.WriteLine(result);  // 9
+ 
+        Console.Read();
+    }
+}
+							</pre>
+						</div>
+					</div>
+					<h2>Присвоение ссылки на метод</h2>
+					<p>Выше переменной делегата напрямую присваивался метод. Есть еще один способ - создание объекта делегата с помощью конструктора, в который передается нужный метод:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_8" class="hide"/>
+						<label div id="button" for="show_code_8">Показать код</label>
+						<div>
+							<pre>
+class Program
+{
+    delegate int Operation(int x, int y);
+ 
+    static void Main(string[] args)
+    {
+        Operation del = Add;
+        Operation del2 = new Operation(Add);
+ 
+        Console.Read();
+    }
+    private static int Add(int x, int y) { return x + y; }
+}							</pre>
+						</div>
+					</div>
+					<h2>Добавление методов в делегат</h2>
+					<p>В примерах выше переменная делегата указывала на один метод. В реальности же делегат может указывать на множество методов, которые имеют ту же сигнатуру и возвращаемые тип. 
+					Все методы в делегате попадают в специальный список - список вызова или invocation list. И при вызове делегата все методы из этого списка последовательно вызываются. 
+					И мы можем добавлять в этот спиок не один, а несколько методов:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_9" class="hide"/>
+						<label div id="button" for="show_code_9">Показать код</label>
+						<div>
+							<pre>
+class Program
+{
+    delegate void Message();
+ 
+    static void Main(string[] args)
+    {
+        Message mes1 = Hello;
+        mes1 += HowAreYou;  // теперь mes1 указывает на два метода
+        mes1(); // вызываются оба метода - Hello и HowAreYou
+        Console.Read();
+    }
+    private static void Hello()
+    {
+        Console.WriteLine("Hello");
+    }
+    private static void HowAreYou()
+    {
+        Console.WriteLine("How are you?");
+    }
+}							</pre>
+						</div>
+					</div>
+					<p>В данном случае в список вызова делегата mes1 добавляются два метода - Hello и HowAreYou. И при вызове mes1 вызываются сразу оба этих метода.
+						Для добавления делегатов применяется операция +=. Однако стоит отметить, что в реальности будет происходить создание нового объекта делегата, который получит методы старой копии делегата и новый метод, и новый созданный объект делеагата будет присвоен переменной mes1.
+						При добавлении делегатов следует учитывать, что мы можем добавить ссылку на один и тот же метод несколько раз, и в списке вызова делегата тогда будет несколько ссылок на один и то же метод. Соответственно при вызове делегата добавленный метод будет вызываться столько раз, сколько он был добавлен:
+					</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_10" class="hide"/>
+						<label div id="button" for="show_code_10">Показать код</label>
+						<div>
+							<pre>
+Message mes1 = Hello;
+mes1 += HowAreYou;
+mes1 += Hello;
+mes1 += Hello;
+ 
+mes1();						</pre>
+						</div>
+					</div>
+					<p>Консольный вывод:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_11" class="hide"/>
+						<label div id="button" for="show_code_11">Показать код</label>
+						<div>
+							<pre>
+Hello
+How are you?
+Hello
+Hello						</pre>
+						</div>
+					</div>
+					<p>Подобным образом мы можем удалять методы из делегата с помощью операции -=:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code_12" class="hide"/>
+						<label div id="button" for="show_code_12">Показать код</label>
+						<div>
+							<pre>
+static void Main(string[] args)
+{
+    Message mes1 = Hello;
+    mes1 += HowAreYou;
+    mes1(); // вызываются все методы из mes1
+    mes1 -= HowAreYou;  // удаляем метод HowAreYou
+    mes1(); // вызывается метод Hello
+     
+    Console.Read();
+}							</pre>
+						</div>
+					</div>
+					<p>
+					При удалении методов из делегата фактически будет создаватья новый делегат, который в списке вызова методов будет содержать на один метод меньше.
+					При удалении следует учитывать, что если делегат содержит несколько ссылок на один и тот же метод, то операция -= начинает поиск с конца списка вызова делегата и удаляет только первое найденное вхождение. Если подобного метода в списке вызова делегата нет, то операция -= не имеет никакого эффекта.
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+    </body>
+</html>
