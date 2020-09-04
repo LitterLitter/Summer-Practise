@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <link href="../../../css/styles.css" rel="stylesheet">
+        <title>Многопоточность. C#</title>
+    </head>
+    <body>
+		<div class="header">
+			<div class="image">
+				<img class="image" src="../../icon.png"></image>
+			</div>
+			<div class="title">
+				<a>IMPROVE YOURSELF</a>
+			</div>
+		</div>
+		<div class="topics">
+			<ul class="nav">
+				<li>
+					<a href="../../topicsView.html"><b>C#</b></a>
+					<a href="../ClassesAndObjects/content.html">Классы</a>
+					<a href="#">Делегаты</a>
+				</li>
+			</ul>
+		</div>
+        <div class="content">
+			<div class="content_wrapper">
+				<div class="topic_title_info">
+					<ul class="topic_title_info_list">
+						<li>
+							<a>от: Max</a>
+							<a>"29 августа 2020 года"</a>
+						</li>
+					</ul>
+					<h2 class="topic_title_header">Введение в многопоточность. Класс Thread</h2>
+					<img class="topic_title_info_image" src="title.jpg"></img>
+				</div>
+				<div class="article">
+					<p>Одним из ключевых аспектов в современном программировании является многопоточность. 
+					Ключевым понятием при работе с многоопоточностью является поток. Поток предствляет некоторую часть кода программы. 
+					При выполнении программы каждому потоку выделяется определенный квант времени. 
+					И при помощи многопоточности мы можем выделить в приложении несколько потоков, которые будут выполнять различные задачи одновременно. 
+					Если у нас, допустим, графическое приложение, которое посылает запрос к какому-нибудь серверу или считывает и обрабатывает огромный файл, то без многопоточности у нас бы блокировался графический интерфейс на время выполнения задачи. 
+					А благодаря потокам мы можем выделить отправку запроса или любую другую задачу, которая может долго обрабатываться, в отдельный поток. 
+					Поэтому, к примеру, клиент-серверные приложения (и не только они) практически не мыслимы без многопоточности.
+					Основной функционал для использования потоков в приложении сосредоточен в пространстве имен System.Threading. В нем определен класс, представляющий отдельный поток - класс Thread.
+					</p>
+					<p>Класс Thread определяет ряд методов и свойств, которые позволяют управлять потоком и получать информацию о нем. Основные свойства класса:</p>
+					<div class="list_style">
+						<ul>
+							<li><p>Статическое свойство <span class="b">CurrentContext</span> позволяет получить контекст, в котором выполняется поток</p></li>
+							<li><p>Статическое свойство <span class="b">CurrentThread</span> возвращает ссылку на выполняемый поток</p></li>
+							<li><p>Свойство <span class="b">IsAlive</span> указывает, работает ли поток в текущий момент</p></li>
+							<li><p>Свойство <span class="b">IsBackground</span> указывает, является ли поток фоновым</p></li>
+							<li><p>Свойство <span class="b">Name</span> содержит имя потока</p></li>
+							<li><p>Свойство <span class="b">Priority</span> хранит приоритет потока - значение перечисления ThreadPriority</p></li>
+							<li><p>Свойство <span class="b">ThreadState</span> возвращает состояние потока - одно из значений перечисления ThreadState</p></li>
+						</ul>
+					</div>
+					<p>Некоторые методы класса Thread:</p>
+					<div class="list_style">
+						<ul>
+							<li><p>Статический метод <span class="b">GetDomain</span> возвращает ссылку на домен приложения </p></li>
+							<li><p>Статический метод <span class="b">GetDomainID</span> возвращает id домена приложения, в котором выполняется текущий поток </p></li>
+							<li><p>Статический метод <span class="b">Sleep</span> останавливает поток на определенное количество миллисекунд</p></li>
+							<li><p>Метод <span class="b">Abort</span> уведомляет среду CLR о том, что надо прекратить поток, однако прекращение работы потока происходит не сразу, 
+							а только тогда, когда это становится возможно. Для проверки завершенности потока следует опрашивать его свойство ThreadState</p></li>
+							<li><p>Метод <span class="b">Interrupt</span> прерывает поток на некоторое время</p></li>
+							<li><p>Метод <span class="b">Join</span> блокирует выполнение вызвавшего его потока до тех пор, пока не завершится поток, для которого был вызван данный метод</p></li>
+							<li><p>Метод <span class="b">Start</span> запускает поток</p></li>
+						</ul>
+					</div>
+					<h2>Получение информации о потоке</h2>
+					<p>Используем вышеописанные свойства и методы для получения информации о потоке:</p>
+					<div class="demo">
+						<input type="checkbox" id="show_code" class="hide"/>
+						<label div id="button" for="show_code">Показать код</label>
+						<div>
+							<pre>
+using System.Threading;
+....................
+static void Main(string[] args)
+{
+    // получаем текущий поток
+    Thread t = Thread.CurrentThread;
+ 
+    //получаем имя потока
+    Console.WriteLine($"Имя потока: {t.Name}");
+    t.Name = "Метод Main";
+    Console.WriteLine($"Имя потока: {t.Name}");
+ 
+    Console.WriteLine($"Запущен ли поток: {t.IsAlive}");
+    Console.WriteLine($"Приоритет потока: {t.Priority}");
+    Console.WriteLine($"Статус потока: {t.ThreadState}");
+ 
+    // получаем домен приложения
+    Console.WriteLine($"Домен приложения: {Thread.GetDomain().FriendlyName}");
+ 
+    Console.ReadLine();
+}
+							</pre>   
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+    </body>
+</html>
