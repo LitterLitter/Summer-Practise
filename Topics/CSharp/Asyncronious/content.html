@@ -17,7 +17,7 @@
 		<div class="topics">
 			<ul class="nav">
 				<li>
-					<a href="../../../main.html"><b>C# / C++</b></a>
+					<a href="../../../main.html" style="color:black"><b>C# / C++</b></a>
 					<a href="../ClassesAndObjects/content.html">Классы</a>
 					<a href="../Multithreading/content.html">Многопоточность</a>
 					<a href="../Delegates/content.html">Делегаты</a>
@@ -34,7 +34,7 @@
 						</li>
 					</ul>
 					<h2 class="topic_title_header">Асинхронное программирование</h2>
-					<img class="topic_title_info_image" src="title.jpg"></img>
+					<pre><p><img class="topic_title_info_image" src="title.jpg"></img></p></pre>
 				</div>
 				<div class="article">
 					<p>Асинхронность позволяет вынести отдельные задачи из основного потока в специальные асинхронные методы или блоки кода. 
@@ -130,19 +130,13 @@ namespace HelloApp
 					</p>
 					<p>И в методе Main мы вызываем этот асинхронный метод.</p>
 					<p>Посмотрим, какой у программы будет консольный вывод:</p>
-					<div class="demo">
-						<input type="checkbox" id="show_code_3" class="hide"/>
-						<label div id="button" for="show_code_3">Показать код</label>
-						<div>
-							<pre>Начало метода FactorialAsync
+					<pre>Начало метода FactorialAsync
 Введите число: 
 7
 Квадрат числа равен 49
 Конец метода Main
 Факториал равен 720
 Окончание метода FactorialAsync</pre>   
-						</div>
-					</div>
 					<p>Разберем поэтапно, что здесь происходит:</p>
 					<p>Запускается метод Main, в котором вызывается асинхронный метод <span class="b">FactorialAsync</span>.</p> 
 					<p>Метод <span class="b">FactorialAsync</span> начинает выполняться синхронно вплоть до выражения await.</p>

@@ -1,6 +1,9 @@
 * {
     box-sizing: border-box;
 }
+html {
+	background: #000 url(../main.gif);
+}
 body, h1, h2, h3, h3, h4, h5, h6, article, header, section, nav, main, aside, p, a, ul, li, html, nav, span, div {
 	margin: 0;
 	padding: 0;
@@ -177,6 +180,6 @@ pre {
 	overflow: auto;
 }
 .topic_title_info_image{
-	width:600px;
-	height:400px;
+	width:700px;
+	height:450px;
 }
