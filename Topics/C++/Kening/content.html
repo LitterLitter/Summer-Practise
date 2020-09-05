@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <link href="../../../css/styles.css" rel="stylesheet">
+        <title>Programming</title>
+		<style>
+		.hide {
+			display: none; 
+		}
+		.hide + label ~ div{
+			display: none;
+		}
+		.hide:checked + label + div {
+			display: block; 	
+		}
+		.demo {
+			margin-top:2%;
+			margin-bottom:1%;
+		}
+		#article{
+			background-color: #fafafa;
+			border-left: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			margin-left: 20%;		
+			width: 60%;
+		}				
+		#button {
+			display: inline-block;
+			color: white;
+			font-size: 13px;
+			text-decoration: none;
+			user-select: none;
+			padding: .5em 2em;
+			outline: none;
+			border: 2px solid;
+			border-radius: 1px;
+			transition: 0.2s;
+			background-color:black;
+			box-shadow:0 0 1px rgb(86,96,106);
+		} 
+		#button:hover {
+			background:white;
+			color: black;
+		}
+		#button:active {
+			background: white;
+			color: black;
+		}
+		#about{ 
+			font-size: 12px;    
+			text-align: center;
+			padding: 10px 10px 30px 10px;
+			background-color: #000000;
+			color:white;
+			border-top:1px solid black;
+		}
+		pre {
+			display: block;
+			padding: 8px;
+			margin: 0 0 8.5px;
+			font-size: 14px;
+			line-height: 1.4;	
+			color: #ccc;
+			background-color: black;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}	
+		pre {
+			overflow: auto;
+		}
+	</style>
+    </head>
+    <body>
+		<div class="header">
+			<div class="image">
+				<img class="image" src="../../icon.png"></image>
+			</div>
+			<div class="title">
+				<a>IMPROVE YOURSELF</a>
+			</div>
+		</div>
+		<div class="topics">
+			<ul class="nav">
+				<li>
+					<a href="../../topicsView.html"<p style="color:black;"</p><b>C++</b></a>
+					<a href="../StartCpp/content.html">Начало работы с C++</a>
+					<a href="../Asinhronius/content.html">Синхронная асинхронность</a>
+				</li>
+			</ul>
+		</div>
+        <div class="content">
+			<div class="content_wrapper">
+				<div class="topic_title_info">
+					<ul class="topic_title_info_list">
+						<li>
+							<a>от: Mary</a>
+							<a>"15 июня 2020 года"</a>
+						</li>
+					</ul>
+					<h2 class="topic_title_header">Поиск Кенига или как найти то, чего не видно</h2>
+				</div>
+				<div>
+					</p>
+					<pre><p><img src="content.png" width="650" height="450"</p></pre>
+					<p>С места в карьер! Скомпилируется ли следующий код? 
+					Если да – почему? Если нет – почему? </p>
+					<div class="demo">
+						<input type="checkbox" id="show_code" class="hide"/>
+						<label div id="button" for="show_code">Показать код</label>
+						<div>
+							<pre>
+#include &lt;iostream&gt;
+
+namespace A {
+    struct SomeClass {};
+
+    void func(const SomeClass& value) {
+    std::cout &lt;&lt; "Hello from A::func!" &lt;&lt; std::endl;
+    }
+}
+
+int main(int argc, char * argv[]) {
+    func(A::SomeClass{});
+    return 0;
+}
+							</pre>   
+						</div>
+					</div>
+					<p>Да, такой код скомпилируется, несмотря на то, что 
+					мы не указали пространство имён при вызове функции 
+					func. Как же компилятор догадался «заглянуть» в
+					namespace A и поискать функцию там? Ответ можно прочитать
+					в заголовке этой заметки </p>
+					<h2>Поиск Кенига (Koenig lookup или Argument-dependent lookup)</h2>
+					<p>Правила этого поиска довольно сложны и включают в себя девять 
+					(!!!) пунктов различных условий. Однако то, что нас интересует 
+					в данный момент, можно выразить достаточно просто: при разрешении 
+					вызова функции список кандидатов составляется не только 
+					из элементов, доступных в данном пространстве имён, но и в 
+					пространствах имён аргументов вызова. </p>
+					<p>Таким образом, встретив вызов </p>
+					<pre>
+func(A::SomeClass{});
+					</pre>
+					<p>компилятор будет искать целевую функцию с именем func
+					не только в текущем пространстве имён, но и в пространстве имён
+					аргумента (в данном случае в namespace A). </p>
+					<h2>Почему поиск работает именно так, а не иначе?</h2>
+					<p>Вопрос резонный. Для того, чтобы лучше понять и запомнить что-то, 
+					иногда бывает полезно осознать мотивацию. Тем более в данном случае
+					мотивация очень и очень серьёзная. Достаточно посмотреть на следующий
+					пример кода, который пришлось бы написать, не будь в языке C++ реализован ADL:</h2>
+					<pre>
+// std::cout &lt;&lt; "Hello, World!" &lt;&lt; std::endl;
+std::operator&lt;&lt;(std::operator&lt;&lt;(std::cout, "Hello, World!"), "\n");
+					</pre>
+					<p>Обратите внимание на закомментированную строчку 1. Знакомо,
+					не правда ли? Каждый программист на C++ довольно часто пользуется 
+					оператором operator<< для вывода в std::cout. Но проблема в том,
+					что в глобальном пространстве имён такого оператора нет! 
+					</p2>
+					<p2>Он имеется только в пространстве имён std. Поэтому без поиска 
+					Кенига нам бы пришлось написать полную квалификацию пространств 
+					имён используемых функций (в данном случае это operator<<).
+					</p2>
+					<p2>В результате изо дня в день пришлось бы писать строчки,
+					как строка 2 в приведённом выше примере. Спасибо Кенигу! Оказывается,
+					мы пользуемся его творением практически постоянно!</p2>
+					
+					
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+    </body>
+</html>

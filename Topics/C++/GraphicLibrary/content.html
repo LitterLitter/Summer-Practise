@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <link href="../../../css/styles.css" rel="stylesheet">
+        <title>Programming</title>
+		<style>
+		.hide {
+			display: none; 
+		}
+		.hide + label ~ div{
+			display: none;
+		}
+		.hide:checked + label + div {
+			display: block; 	
+		}
+		.demo {
+			margin-top:2%;
+			margin-bottom:1%;
+		}
+		#article{
+			background-color: #fafafa;
+			border-left: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			margin-left: 20%;		
+			width: 60%;
+		}				
+		#button {
+			display: inline-block;
+			color: white;
+			font-size: 13px;
+			text-decoration: none;
+			user-select: none;
+			padding: .5em 2em;
+			outline: none;
+			border: 2px solid;
+			border-radius: 1px;
+			transition: 0.2s;
+			background-color:black;
+			box-shadow:0 0 1px rgb(86,96,106);
+		} 
+		#button:hover {
+			background:white;
+			color: black;
+		}
+		#button:active {
+			background: white;
+			color: black;
+		}
+		#about{ 
+			font-size: 12px;    
+			text-align: center;
+			padding: 10px 10px 30px 10px;
+			background-color: #000000;
+			color:white;
+			border-top:1px solid black;
+		}
+		pre {
+			display: block;
+			padding: 8px;
+			margin: 0 0 8.5px;
+			font-size: 14px;
+			line-height: 1.4;	
+			color: #ccc;
+			background-color: black;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}	
+		pre {
+			overflow: auto;
+		}
+	</style>
+    </head>
+    <body>
+		<div class="header">
+			<div class="image">
+				<img class="image" src="../../icon.png"></image>
+			</div>
+			<div class="title">
+				<a>IMPROVE YOURSELF</a>
+			</div>
+		</div>
+		<div class="topics">
+			<ul class="nav">
+				<li>
+					<a href="../../topicsView.html"<p style="color:black;"</p><b>C++</b></a>
+					<a href="../StartCpp/content.html">Начало работы с C++</a>
+					<a href="../Asinhronius/content.html">Синхронная асинсхронность</a>
+				</li>
+			</ul>
+		</div>
+        <div class="content">
+			<div class="content_wrapper">
+				<div class="topic_title_info">
+					<ul class="topic_title_info_list">
+						<li>
+							<a>от: Mary</a>
+							<a>"2 сентября 2020 года"</a>
+						</li>
+					</ul>
+					<h2 class="topic_title_header">Обзор графических библиотек C++</h2>
+				</div>
+				<div>
+					</p><pre><p><img src="library.png" width="650" height="450"</p></pre>
+					<p>Одним из наиболее мощных и популярных языков программирования 
+					является C++. На нём ежедневно пишут сотни приложений, нередко
+					использующих GUI. Но работа с графикой не всегда удобна для 
+					программиста, поэтому на помощь приходят графические библиотеки,
+					делающие разработку графической части быстрее и удобнее. О них и поговорим.  
+					</p>
+					<h2>SFML</h2>
+					</p><pre><p><img src="SFML.png" width="350" height="120"</p></pre>
+					<p>Simple and Fast Multimedia Library — одна из наиболее быстрых и удобных библиотек 
+					для 2D-графики. У неё минимальные требования к уровню знаний C++, плюс она отличается
+					лёгкостью освоения. С её помощью вы напишете полноценную программу всего за несколько
+					дней. А первое графическое приложение «SFML works!» — всего за минуту. Также библиотека
+					отличается кроссплатформенностью, работая под Windows, Linux и Mac.
+					SFML часто используется в небольших стартапах либо разработчиками, которые сами занимаются
+					созданием игр. Инструмент популярен прежде всего потому, что не требует написания объёмного кода. 				
+					<h2>Qt</h2>
+					</p><pre><p><img src="Qt.png" width="350" height="150"</p></pre>
+					<p>Это целый набор инструментов для проектирования GUI. Разумеется, можно писать и игры, но Qt 
+					привлекает больше своими достоинствами: удобство, быстрота, гибкость, кроссплатформенность. 
+					Библиотека доступна и на Windows, и на Linux, и на Mac, и на Windows Mobile, iOS и Android.
+
+					С помощью метаобъектного компилятора Qt расширяет C++, предоставляя дополнительные функции 
+					(к примеру, сигналы и слоты). Имеет платную службу технической поддержки и платную лицензию.
+					Есть большой выбор IDE: QDevelop, Edyuk, QtDesigner, QtCreator. Доступна интеграция с
+					Eclipse, XCode, Visual Studio.</p>
+					<h2>Cairo</h2>
+					</p><pre><p><img src="cairo.png" width="500" height="100"</p></pre>
+					<p>Используется для отрисовки векторных изображений под Windows, Mac OS, Linux. Применяется в 
+					браузерном движке Gecko, лежит в основе ряда ОС: MorphOS, AmigaOS. Если выбираете Cairo, будьте 
+					готовы к отсутствию ресурсов на русском языке. 
+					Библиотека поддерживает взаимодействие с OpenGL-бэкендом с поддержкой GPU. Это, несомненно, 
+					открывает ряд полезных функций.</p> 
+					<h2>Cocos2D-X</h2>
+					</p><pre><p><img src="cocos.png" width="650" height="150"</p></pre>
+					<p>Кроссплатформенная библиотека, призванная упростить разработку игр для мобильных платформ.
+					По кроссплатформенности схожа с Qt, но есть и другие плюсы: доступность, удобство, возможность
+					создания отдельного конструктора игр, который основан на библиотеке Cocos Creator. 
+					Прекрасно подходит, если нужно работать с анимацией и графикой в небольших объёмах, 
+					т. к. вся графика добавляется извне (на неё ссылаются из кода). 
+					Учтите, что уроки на эту библиотеку есть только на английском.</p>
+					<h2>Juce</h2>
+					</p><pre><p><img src="juce.jpg" width="350" height="300"</p></pre>
+					<p>Кроссплатформенный фреймворк, который служит для создания плагинов и приложений на C++. На 
+					английском языке есть очень много документации по Juce
+					Библиотека особенно популярна среди тех, кто разрабатывает аудио-софт, так как имеет набор 
+					оболочек-интерфейсов для создания аудио-плагинов. </p>
+					<h2>SDL 2.0</h2>
+					</p><pre><p><img src="SDL.png" width="550" height="400"</p></pre>
+					<p>Кроссплатформенная 2D-библиотека для написания приложений (как правило, игр). Поддерживает 
+					Windows, Mac OS, Linux, Android, Windows Mobile, iOS. Характеризуется быстротой, надёжностью и
+					лёгкостью в эксплуатации. Также в SDL реализованы профессиональные инструменты, предназначенные
+					для работы со звуком, что является большим плюсом при реализации крупных проектов.
+					Остаётся добавить, что библиотека хорошо интегрируется с OpenGL и комбинируется с wxWidgets. </p>
+					<h2>GTK+</h2>
+					</p><pre><p><img src="gtk.png" width="320" height="300"</p></pre>
+					<p>Тоже очень известная графическая библиотека, которая широко применяется во многих системах. 
+					Сначала этот фреймворк задумывался как GIMP-компонент, но спустя 20 лет после выхода в свет первой 
+					стабильной версии библиотека нашла применение и в сотнях других приложений. 
+					Сегодня практически не уступает Qt, поддерживая разные языки программирования. Кстати, это одна
+					из немногих библиотек,которая взаимодействует с языком C. </p>
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+    </body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta charset="utf-8">
+        <link href="../../../css/styles.css" rel="stylesheet">
+        <title>Programming</title>
+		<style>
+		.hide {
+			display: none; 
+		}
+		.hide + label ~ div{
+			display: none;
+		}
+		.hide:checked + label + div {
+			display: block; 	
+		}
+		.demo {
+			margin-top:2%;
+			margin-bottom:1%;
+		}
+		#article{
+			background-color: #fafafa;
+			border-left: 1px solid #ccc;
+			border-right: 1px solid #ccc;
+			margin-left: 20%;		
+			width: 60%;
+		}				
+		#button {
+			display: inline-block;
+			color: white;
+			font-size: 13px;
+			text-decoration: none;
+			user-select: none;
+			padding: .5em 2em;
+			outline: none;
+			border: 2px solid;
+			border-radius: 1px;
+			transition: 0.2s;
+			background-color:black;
+			box-shadow:0 0 1px rgb(86,96,106);
+		} 
+		#button:hover {
+			background:white;
+			color: black;
+		}
+		#button:active {
+			background: white;
+			color: black;
+		}
+		#about{ 
+			font-size: 12px;    
+			text-align: center;
+			padding: 10px 10px 30px 10px;
+			background-color: #000000;
+			color:white;
+			border-top:1px solid black;
+		}
+		pre {
+			display: block;
+			padding: 8px;
+			margin: 0 0 8.5px;
+			font-size: 14px;
+			line-height: 1.4;	
+			color: #ccc;
+			background-color: black;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}	
+		pre {
+			overflow: auto;
+		}
+	</style>
+    </head>
+    <body>
+		<div class="header">
+			<div class="image">
+				<img class="image" src="../../icon.png"></image>
+			</div>
+			<div class="title">
+				<a>IMPROVE YOURSELF</a>
+			</div>
+		</div>
+		<div class="topics">
+			<ul class="nav">
+				<li>
+					<a href="../../topicsView.html"<p style="color:black;"</p><b>C++</b></a>
+					<a href="../StartCpp/content.html">Начало работы с C++</a>
+					<a href="../GraphicLibrary/content.html">Обзор графических библиотек</a>
+				</li>
+			</ul>
+		</div>
+        <div class="content">
+			<div class="content_wrapper">
+				<div class="topic_title_info">
+					<ul class="topic_title_info_list">
+						<li>
+							<a>от: Mary</a>
+							<a>"5 сентября 2020 года"</a>
+						</li>
+					</ul>
+					<h2 class="topic_title_header">Синхронная асинхронность в C++</h2>
+				</div>
+				<div>
+					</p>
+					<pre><p><img src="content.png" width="650" height="450"</p></pre>
+					<p>Наверняка все, кто изучал старый добрый стандарт C++11, знают о 
+					существовании в стандартной библиотеке вызова std::async, который 
+					позволяет выполнить некий код асинхронно (более точно – поведение 
+					указывается первым параметром вызова).
+					Согласно документации, вызов с параметром std::launch::async 
+					обещает выполнить пользовательский код в отдельном потоке. Посмотрим
+					на приведённый ниже код. </p>
+					<div class="demo">
+						<input type="checkbox" id="show_code" class="hide"/>
+						<label div id="button" for="show_code">Показать код</label>
+						<div>
+							<pre>
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+int main(int argc, char* argv[]) {
+    int count = 10;
+
+     std::async(std::launch::async, [&count] {
+         for(int i=0; i&lt;count; ++i) {
+           std::cout &lt;&lt; 1;
+           std::this_thread::sleep_for(std::chrono::milliseconds(1));
+       }
+   });
+   std::async(std::launch::async, [&count] {
+       for(int i=0; i&lt;count; ++i) {
+           std::cout &lt;&lt; 2;
+           std::this_thread::sleep_for(std::chrono::milliseconds(1));
+       }
+   });
+
+   return 0;
+}
+							</pre>   
+						</div>
+					</div>
+					<p>В строках 8-13 запускаем асинхронное выполнение
+					простой lambda-функции, которая должна вывести на экран 
+					цифру «1» каждую миллисекунду десять раз. В строках 
+					14-19 запускаем выполнение аналогичной функции, но 
+					на этот раз она будет выводить на экран цифру «2». 
+					Что можно ожидать на экране по окончанию выполнения 
+					программы? </p>
+					<h2>Кто сказал, что «результат не определён»?</h2>
+					<p>Идея такой гипотезы заключается в том, что оба
+					потока будут выполняться параллельно, поэтому вывод
+					на экран перемешается. Мы можем увидеть на экране, например,
+					такую последовательность: </p>
+					<pre>
+12212121211212211221
+					</pre>
+					<p>Звучит логично, но эта гипотеза неверна. На самом деле
+					на экран гарантированно будет выведена последовательность:</p>
+					<pre>
+11111111112222222222
+					</pre>
+					<h2>Почему? Что произошло?</h2>
+					<p>А произошла принудительная синхронизация двух потоков.
+					Выполнение второго потока (с выводом цифры «2») гарантированно
+					начнётся только после того, как первый поток закончит своё выполнение.</p>
+					<h2>Кто догадается, почему?</h2>
+					<p>На самом деле не всё так просто. Но достаточно задуматься, про что 
+					мы забыли в этом примере? А забыли мы про то, что в качестве результата
+					вызов std::async возвращает std::future. Если бы мы написали наш пример 
+					следующим образом, то результат на экране стал бы действительно неопределённым:
+					</p2>
+					<div class="demo">
+						<input type="checkbox" id="show_code_2" class="hide"/>
+						<label div id="button" for="show_code_2">Показать код</label>
+						<div>
+							<pre>
+#include &lt;future&gt;
+#include &lt;iostream&gt;
+#include &lt;thread&gt;
+
+int main(int argc, char* argv[]) {
+  int count = 10;
+
+  auto future1 = std::async(std::launch::async, [&count] {
+      for(int i=0; i&lt;count; ++i) {
+        std::cout &lt;&lt; 1;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+});
+auto future2 = std::async(std::launch::async, [&count] {
+    for(int i=0; i&lt;count; ++i) {
+        std::cout &lt;&lt; 2;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+    }
+});
+
+ return 0;
+}
+							</pre>   
+						</div>
+					</div>
+					<p>Вот теперь на экране действительно может быть 
+					любая последовательность из перемешанных двадцати 
+					цифр 1 и 2. Почему результат так кардинально изменился, 
+					стоило нам только лишь сохранить std::future, 
+					которое вернул вызов std::async? </p>
+					<h2>Как говорится, всё законно, всё по стандарту</h2>
+					<p2>Стандарт гарантирует, что окончание выполнение 
+					потока, запущенного вызовом std::async, 
+					синхронизировано с вызовом получения результата
+					std::future::get или с освобождением общего состояния
+					(shared state) – области памяти, ответственной за передачу
+					результата между std::async и std::future.В первом примере 
+					автоматическое удаление временного объекта std::future, 
+					который был возвращён из первого вызова std::async, 
+					приводит к освобождению общего состояния и автоматической
+					синхронизации двух потоков. Просто не сохранив результат
+					вызова std::async, мы получили ожидание – второй поток
+					не начнёт выполнение до окончания выполнения первого потока.</p2>
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<p>Контакты для связи: mari.kolesnikova.01@list.ru, super.kiz2016@yandex.ru</p>
+			<p>Copyright © Programming.com, 2020</p>
+		</div>
+    </body>
+</html>
